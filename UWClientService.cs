@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Sockets;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using System.ServiceProcess;
-using System.Net.Sockets;
 using System.Timers;
 using WUApiLib;
 
@@ -18,8 +21,16 @@ namespace UpdateWatch_Client
         const String serverIP = "127.0.0.1";
         const Int16 serverPort = 4584;
 
-        private static System.Timers.Timer timer1;
+        private static Timer timer1 = new Timer();
         private static Random random = new Random();
+
+        struct stData
+        {
+            public String machineName;
+            public Int64 tickCount;
+            public System.OperatingSystem osVersion;
+            public ISearchResult sResult;
+        }
 
         public UWClientService()
         {
@@ -31,11 +42,10 @@ namespace UpdateWatch_Client
 
         public static void initializeService()
         {
-            timer1 = new System.Timers.Timer(timerInterval + random.Next(timerRandom));
+            timer1.Interval = timerInterval + random.Next(timerRandom);
             timer1.Elapsed += new ElapsedEventHandler(OnTimer1);
             timer1.AutoReset = true;
             timer1.Enabled = true;
-//            timer1.Start();
 
             handleUpdates();
         }
@@ -70,6 +80,8 @@ namespace UpdateWatch_Client
 
         private static void handleUpdates()
         {
+            stData sendData;
+            BinaryFormatter formatter = new BinaryFormatter();
             UpdateSession uSession = new UpdateSession();
             IUpdateSearcher uSearcher = uSession.CreateUpdateSearcher();
             uSearcher.Online = false;
@@ -84,6 +96,21 @@ namespace UpdateWatch_Client
                         Console.WriteLine(update.Title);
                     }
                 }
+                try
+                {
+                    TcpClient c = new TcpClient(serverIP, serverPort);
+                    Stream inOut = c.GetStream();
+
+                    sendData.machineName = System.Environment.MachineName;
+                    sendData.osVersion = System.Environment.OSVersion;
+                    sendData.tickCount = System.Environment.TickCount;
+                    sendData.sResult = sResult;
+
+                    formatter.Serialize(inOut, sendData);
+
+                    c.Close();
+                }
+                catch { }
             }
             catch (Exception ex)
             {
