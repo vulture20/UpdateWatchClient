@@ -1,0 +1,11 @@
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\bin\Debug\UpdateWatch-Client.exe.config
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.csprojResolveAssemblyReference.cache
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\bin\Debug\UpdateWatch-Client.exe
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\bin\Debug\UpdateWatch-Client.pdb
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.exe
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.pdb
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\bin\Debug\UpdateWatch-Client.exe.manifest
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\bin\Debug\UpdateWatch-Client.application
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.TrustInfo.xml
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.exe.manifest
+c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.application
