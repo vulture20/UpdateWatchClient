@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateWatch-Client.exe" size="76280">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateWatch-Client.exe" size="80888">
       <assemblyIdentity name="UpdateWatch-Client" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wXvT/9TC0MaIlPvAMkpzGY6BMSAnTXxuGUWqLxwwf5w=</dsig:DigestValue>
+        <dsig:DigestValue>WSLMQ62vMzJrDNj286r1Vt6LgIBuPFBpCG5OQnfyf3M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -63,13 +63,13 @@
       <dsig:DigestValue>MLcjHw4c11oG5BnOiHh/UrTt5JhnmRO1FkVJU88/nuc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="UpdateWatch-Client.exe.config" size="559">
+  <file name="UpdateWatch-Client.exe.config" size="443">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>OEAx014Hc76nV7mO0POL9bOn7b8Z70w4n+FlLEWgKng=</dsig:DigestValue>
+      <dsig:DigestValue>9Q9hwdKpkmvqSmKrs5yUTi2nXTLGCyWlrs9kFYgAL2A=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
