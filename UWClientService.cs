@@ -5,10 +5,12 @@ using System.Net.Sockets;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Permissions;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Xml.Serialization;
 using WUApiLib;
 
 namespace UpdateWatch_Client
@@ -18,19 +20,11 @@ namespace UpdateWatch_Client
         //                         Std   Min  Sek  ms
         const double timerInterval = 2 * 60 * 60 * 1000;
         const Int32 timerRandom =         5 * 60 * 1000;
-        const String serverIP = "127.0.0.1";
+        const string serverIP = "127.0.0.1";
         const Int16 serverPort = 4584;
 
         private static Timer timer1 = new Timer();
         private static Random random = new Random();
-
-        struct stData
-        {
-            public String machineName;
-            public Int64 tickCount;
-            public System.OperatingSystem osVersion;
-            public ISearchResult sResult;
-        }
 
         public UWClientService()
         {
@@ -80,37 +74,63 @@ namespace UpdateWatch_Client
 
         private static void handleUpdates()
         {
-            stData sendData;
+            List<UWUpdate.WUpdate> updateList = new List<UWUpdate.WUpdate>();
             BinaryFormatter formatter = new BinaryFormatter();
             UpdateSession uSession = new UpdateSession();
             IUpdateSearcher uSearcher = uSession.CreateUpdateSearcher();
+
             uSearcher.Online = false;
             try
             {
                 ISearchResult sResult = uSearcher.Search("IsInstalled=0 And IsHidden=0 And Type='Software'");
+//                ISearchResult sResult = uSearcher.Search("IsInstalled=1 And IsHidden=0");
+
                 if (Program.console)
-                {
                     Console.WriteLine("Found " + sResult.Updates.Count + " Updates:");
-                    foreach (IUpdate update in sResult.Updates)
-                    {
+
+                foreach (IUpdate update in sResult.Updates)
+                {
+                    UWUpdate.WUpdate wUpdate = new UWUpdate.WUpdate();
+                    wUpdate.Description = update.Description;
+                    wUpdate.ReleaseNotes = update.ReleaseNotes;
+                    wUpdate.SupportUrl = update.SupportUrl;
+                    wUpdate.Title = update.Title;
+                    updateList.Add(wUpdate);
+
+                    if (Program.console)
                         Console.WriteLine(update.Title);
-                    }
                 }
                 try
                 {
                     TcpClient c = new TcpClient(serverIP, serverPort);
-                    Stream inOut = c.GetStream();
+                    Stream networkStream = c.GetStream();
 
-                    sendData.machineName = System.Environment.MachineName;
-                    sendData.osVersion = System.Environment.OSVersion;
-                    sendData.tickCount = System.Environment.TickCount;
-                    sendData.sResult = sResult;
+                    UWUpdate.clSendData sendData = new UWUpdate.clSendData()
+                    {
+                        dnsName = System.Net.Dns.GetHostName(),
+                        machineName = System.Environment.MachineName,
+                        osVersion = System.Environment.OSVersion,
+                        tickCount = System.Environment.TickCount,
+                        updateCount = sResult.Updates.Count,
+                        wUpdate = updateList
+                    };
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(UWUpdate.clSendData));
 
-                    formatter.Serialize(inOut, sendData);
+                    StringBuilder sb = new StringBuilder();
+                    StringWriter sw = new StringWriter(sb);
+                    xmlSerializer.Serialize(sw, sendData);
+                    Console.WriteLine(sendData.updateCount.ToString());
+                    Console.WriteLine(sw.GetStringBuilder().ToString());
+
+                    xmlSerializer.Serialize(networkStream, sendData);
+                    networkStream.Flush();
 
                     c.Close();
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
             catch (Exception ex)
             {

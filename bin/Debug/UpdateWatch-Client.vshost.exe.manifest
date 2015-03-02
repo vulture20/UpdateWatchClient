@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateWatch-Client.exe" size="85496">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateWatch-Client.exe" size="84472">
       <assemblyIdentity name="UpdateWatch-Client" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>58cXIs4awfmxETxIsIOCnM5Fs53Xr09mzVEVnnmwuAA=</dsig:DigestValue>
+        <dsig:DigestValue>LY+40LfPBjjmt1nESnrznGuKfQLTOJet0MXL9v96WFg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

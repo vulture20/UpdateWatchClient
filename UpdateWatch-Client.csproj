@@ -87,6 +87,7 @@
     <Compile Include="UWClientService.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UWUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
