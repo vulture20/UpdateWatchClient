@@ -10,3 +10,4 @@ c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\Upda
 c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.application
 c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\Interop.WUApiLib.dll
 c:\users\schröpel\documents\visual studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.csproj.ResolveComReference.cache
+C:\Users\Schröpel\Documents\Visual Studio 2013\Projects\UpdateWatch-Client\UpdateWatch-Client\obj\Debug\UpdateWatch-Client.csprojResolveAssemblyReference.cache

@@ -14,7 +14,7 @@ public class UWUpdate
         public string dnsName { get; set; }
         public string machineName { get; set; }
         public Int64 tickCount { get; set; }
-        public System.OperatingSystem osVersion { get; set; }
+        public string osVersion { get; set; }
         public Int32 updateCount { get; set; }
         public List<WUpdate> wUpdate { get; set; }
 
@@ -26,7 +26,7 @@ public class UWUpdate
             dnsName = (string)info.GetValue("dnsName ", typeof(string));
             machineName = (string)info.GetValue("machineName ", typeof(string));
             tickCount = (Int64)info.GetValue("tickCount ", typeof(Int64));
-            osVersion = (System.OperatingSystem)info.GetValue("osVersion ", typeof(System.OperatingSystem));
+            osVersion = (string)info.GetValue("osVersion ", typeof(string));
             updateCount = (Int32)info.GetValue("updateCount ", typeof(Int32));
             wUpdate = (List<WUpdate>)info.GetValue("wUpdate ", typeof(List<WUpdate>));
         }
@@ -53,5 +53,12 @@ public class UWUpdate
         public string ReleaseNotes { get; set; }
         public string SupportUrl { get; set; }
         public string Title { get; set; }
+        public string UpdateID { get; set; }
+        public Int32  RevisionNumber { get; set; }
+        public bool   isMandatory { get; set; }
+        public bool   isUninstallable { get; set; }
+        public string KBArticleIDs { get; set; }
+        public string MsrcSeverity { get; set; }
+        public Int32  Type { get; set; } // 1 = Software, 2 = Driver
     }
 }
