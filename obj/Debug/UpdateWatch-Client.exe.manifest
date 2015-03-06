@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateWatch-Client.exe" size="88568">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="UpdateWatch-Client.exe" size="89080">
       <assemblyIdentity name="UpdateWatch-Client" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>23Q8TGtsufi+IZvTE96cVGAbJyfg1/hLNjBrQdMzLy0=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>ISgxmLKakYYkOi7eDLe3IJdLt4w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -59,17 +59,17 @@
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>MLcjHw4c11oG5BnOiHh/UrTt5JhnmRO1FkVJU88/nuc=</dsig:DigestValue>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>nPOwqZJb+fU0tibzqYbWy9Yqg2g=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="UpdateWatch-Client.exe.config" size="443">
+  <file name="UpdateWatch-Client.exe.config" size="440">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>9Q9hwdKpkmvqSmKrs5yUTi2nXTLGCyWlrs9kFYgAL2A=</dsig:DigestValue>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>xuaL4b7R3gTioeEKW0SK3EF44HM=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

@@ -16,7 +16,6 @@ namespace UpdateWatch_Client
         static int Main(string[] args)
         {
             bool install = false, uninstall = false, rethrow = false;
-
             try
             {
                 foreach (string arg in args)
@@ -77,7 +76,7 @@ namespace UpdateWatch_Client
             try
             {
                 Console.WriteLine(undo ? "uninstalling" : "installing");
-                using (AssemblyInstaller inst = new AssemblyInstaller(typeof(Program).Assembly, args))
+                using (AssemblyInstaller inst = new AssemblyInstaller(typeof(UWClientInstaller).Assembly, args))
                 {
                     IDictionary state = new Hashtable();
                     inst.UseNewContext = true;
@@ -91,15 +90,23 @@ namespace UpdateWatch_Client
                         {
                             inst.Install(state);
                             inst.Commit(state);
+
+                            ServiceController service = new ServiceController("UpdateWatch-Client");
+                            if (service.Status.Equals(ServiceControllerStatus.Stopped))
+                                service.Start();
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Console.Error.WriteLine(ex.Message);
                         try
                         {
                             inst.Rollback(state);
                         }
-                        catch { }
+                        catch
+                        {
+                            Console.Error.WriteLine(ex.Message);
+                        }
                         throw;
                     }
                 }

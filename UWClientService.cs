@@ -16,11 +16,12 @@ using WUApiLib;
 
 namespace UpdateWatch_Client
 {
-    class UWClientService : ServiceBase
+    public partial class UWClientService : ServiceBase
     {
         //                         Std   Min  Sek  ms
         const double timerInterval = 2 * 60 * 60 * 1000;
-        const Int32 timerRandom =         5 * 60 * 1000;
+//        const double timerInterval =      1 * 60 * 1000;
+        const Int32 timerRandom =             15 * 1000;
         const string serverIP = "192.168.116.200";
         const Int16 serverPort = 4584;
 
@@ -38,18 +39,13 @@ namespace UpdateWatch_Client
 
         public static void initializeService()
         {
-            Console.WriteLine("1.1");
             timer1.Interval = timerInterval + random.Next(timerRandom);
-            Console.WriteLine("1.2");
-            timer1.Elapsed += new ElapsedEventHandler(OnTimer1);
-            Console.WriteLine("1.3");
+            timer1.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer1);
             timer1.AutoReset = true;
-            Console.WriteLine("1.4");
             timer1.Enabled = true;
-            Console.WriteLine("1.5");
+            timer1.Start();
 
             th.Start();
-            Console.WriteLine("1.6");
         }
 
         protected override void OnStart(string[] args)
@@ -62,6 +58,7 @@ namespace UpdateWatch_Client
         protected override void OnStop()
         {
             timer1.Enabled = false;
+            timer1.Stop();
             th.Abort();
 
             base.OnStop();
@@ -83,21 +80,16 @@ namespace UpdateWatch_Client
 
         private static void handleUpdates()
         {
-            Console.WriteLine("2.1");
             List<UWUpdate.WUpdate> updateList = new List<UWUpdate.WUpdate>();
-            Console.WriteLine("2.2");
             BinaryFormatter formatter = new BinaryFormatter();
-            Console.WriteLine("2.3");
             UpdateSession uSession = new UpdateSession();
-            Console.WriteLine("2.4");
             IUpdateSearcher uSearcher = uSession.CreateUpdateSearcher();
-            Console.WriteLine("2.5");
 
             uSearcher.Online = false;
             try
             {
-//                ISearchResult sResult = uSearcher.Search("IsInstalled=0 And IsHidden=0 And Type='Software'");
-                ISearchResult sResult = uSearcher.Search("IsInstalled=1 And IsHidden=0");
+                ISearchResult sResult = uSearcher.Search("IsInstalled=0 And IsHidden=0 And Type='Software'");
+//                ISearchResult sResult = uSearcher.Search("IsInstalled=1 And IsHidden=0");
 
                 if (Program.console)
                     Console.WriteLine("Found " + sResult.Updates.Count + " Updates:");
@@ -154,7 +146,8 @@ namespace UpdateWatch_Client
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    if (Program.console)
+                        Console.WriteLine(ex.ToString());
                 }
             }
             catch (Exception ex)
@@ -172,6 +165,8 @@ namespace UpdateWatch_Client
 
         private static void OnTimer1(object source, ElapsedEventArgs e)
         {
+            th.Abort();
+            th = new Thread(new ThreadStart(handleUpdates));
             th.Start();
         }
     }
