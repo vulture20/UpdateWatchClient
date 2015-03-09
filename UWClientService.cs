@@ -4,7 +4,6 @@ using System.IO;
 using System.Net.Sockets;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Permissions;
 using System.ServiceProcess;
 using System.Text;
@@ -19,15 +18,16 @@ namespace UpdateWatch_Client
     public partial class UWClientService : ServiceBase
     {
         //                         Std   Min  Sek  ms
-        const double timerInterval = 2 * 60 * 60 * 1000;
+//        const double timerInterval = 2 * 60 * 60 * 1000;
 //        const double timerInterval =      1 * 60 * 1000;
-        const Int32 timerRandom =             15 * 1000;
-        const string serverIP = "192.168.116.200";
-        const Int16 serverPort = 4584;
+//        const Int32 timerRandom =             15 * 1000;
+//        const string serverIP = "192.168.116.200";
+//        const Int16 serverPort = 4584;
 
         private static System.Timers.Timer timer1 = new System.Timers.Timer();
         private static Random random = new Random();
         private static Thread th = new Thread(new ThreadStart(handleUpdates));
+        private static UWConfig config = new UWConfig();
 
         public UWClientService()
         {
@@ -39,11 +39,22 @@ namespace UpdateWatch_Client
 
         public static void initializeService()
         {
-            timer1.Interval = timerInterval + random.Next(timerRandom);
+            timer1.Interval = config.timerInterval + random.Next(config.timerRandom);
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer1);
             timer1.AutoReset = true;
             timer1.Enabled = true;
             timer1.Start();
+
+            try
+            {
+                FileStream fileStream = new FileStream(@"UWConfig.xml", FileMode.Open);
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(UWConfig));
+
+                config = (UWConfig)xmlSerializer.Deserialize(fileStream);
+
+                fileStream.Close();
+            }
+            catch { }
 
             th.Start();
         }
@@ -81,7 +92,6 @@ namespace UpdateWatch_Client
         private static void handleUpdates()
         {
             List<UWUpdate.WUpdate> updateList = new List<UWUpdate.WUpdate>();
-            BinaryFormatter formatter = new BinaryFormatter();
             UpdateSession uSession = new UpdateSession();
             IUpdateSearcher uSearcher = uSession.CreateUpdateSearcher();
 
@@ -120,7 +130,7 @@ namespace UpdateWatch_Client
                 }
                 try
                 {
-                    TcpClient c = new TcpClient(serverIP, serverPort);
+                    TcpClient c = new TcpClient(config.serverIP, config.serverPort);
                     Stream networkStream = c.GetStream();
 
                     UWUpdate.clSendData sendData = new UWUpdate.clSendData()

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.ServiceProcess;
 using System.Configuration.Install;
 
+using System.Xml.Serialization;
+using System.IO;
+
 namespace UpdateWatch_Client
 {
     class Program
@@ -16,6 +19,7 @@ namespace UpdateWatch_Client
         static int Main(string[] args)
         {
             bool install = false, uninstall = false, rethrow = false;
+
             try
             {
                 foreach (string arg in args)
@@ -75,7 +79,7 @@ namespace UpdateWatch_Client
         {
             try
             {
-                Console.WriteLine(undo ? "uninstalling" : "installing");
+                Console.WriteLine(undo ? "Uninstalling..." : "Installing...");
                 using (AssemblyInstaller inst = new AssemblyInstaller(typeof(UWClientInstaller).Assembly, args))
                 {
                     IDictionary state = new Hashtable();
@@ -98,7 +102,6 @@ namespace UpdateWatch_Client
                     }
                     catch (Exception ex)
                     {
-                        Console.Error.WriteLine(ex.Message);
                         try
                         {
                             inst.Rollback(state);
