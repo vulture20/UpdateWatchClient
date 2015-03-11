@@ -30,6 +30,7 @@ namespace UpdateWatch_Client
         private static Thread th = new Thread(new ThreadStart(handleUpdates));
         private static UWConfig config = new UWConfig();
         private static EventLog eventLog = new EventLog("Application");
+        private static string configfile;
 
         public UWClientService()
         {
@@ -37,16 +38,18 @@ namespace UpdateWatch_Client
             this.CanStop = true;
             this.CanPauseAndContinue = true;
             this.AutoLog = true;
+            eventLog.Source = "UpdateWatch-Client";
         }
 
         private static void getConfig() {
-            if (!File.Exists(@"UWConfig.xml"))
+            configfile = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\UWConfig.xml";
+            if (!File.Exists(configfile))
             {
                 try
                 {
                     eventLog.WriteEntry("No config file found. Creating new one...", EventLogEntryType.Warning);
 
-                    FileStream fileStream = new FileStream(@"UWConfig.xml", FileMode.CreateNew);
+                    FileStream fileStream = new FileStream(configfile, FileMode.CreateNew);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(UWConfig));
 
                     xmlSerializer.Serialize(fileStream, config);
@@ -68,7 +71,7 @@ namespace UpdateWatch_Client
             {
                 eventLog.WriteEntry("Reading config file...", EventLogEntryType.Information);
 
-                StreamReader sr = new StreamReader(@"UWConfig.xml", true);
+                StreamReader sr = new StreamReader(configfile, true);
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(UWConfig));
 
                 config = (UWConfig)xmlSerializer.Deserialize(sr);
