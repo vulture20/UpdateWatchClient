@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-16"?>
+<UWConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <serverIP>192.168.10.159</serverIP>
+  <serverPort>4584</serverPort>
+  <timerInterval>30000</timerInterval>
+  <timerRandom>1500</timerRandom>
+</UWConfig>

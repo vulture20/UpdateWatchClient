@@ -92,15 +92,15 @@ namespace UpdateWatch_Client
 
         public static void initializeService()
         {
+            eventLog.Source = "UpdateWatch-Client";
+
+            getConfig();
+
             timer1.Interval = config.timerInterval + random.Next(config.timerRandom);
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer1);
             timer1.AutoReset = true;
             timer1.Enabled = true;
             timer1.Start();
-
-            eventLog.Source = "UpdateWatch-Client";
-
-            getConfig();
 
             th.Start();
         }
@@ -175,14 +175,13 @@ namespace UpdateWatch_Client
                     wUpdate.MsrcSeverity = update.MsrcSeverity;
                     wUpdate.Type = (Int32)update.Type;
                     updateList.Add(wUpdate);
-
                     if (Program.console)
                         Console.WriteLine(update.Title);
                 }
                 try
                 {
-                    TcpClient c = new TcpClient(config.serverIP, config.serverPort);
-                    Stream networkStream = c.GetStream();
+                    TcpClient client = new TcpClient(config.serverIP, config.serverPort);
+                    Stream networkStream = client.GetStream();
 
                     UWUpdate.clSendData sendData = new UWUpdate.clSendData()
                     {
@@ -203,18 +202,18 @@ namespace UpdateWatch_Client
                     xmlSerializer.Serialize(networkStream, sendData);
                     networkStream.Flush();
 
-                    c.Close();
+                    client.Close();
                 }
                 catch (Exception ex)
                 {
-                    eventLog.WriteEntry("Couldn't send the data: " + ex.InnerException.Message, EventLogEntryType.Error);
+                    eventLog.WriteEntry("Couldn't send the data: " + ex.Message, EventLogEntryType.Error);
                     if (Program.console)
                         Console.WriteLine(ex.ToString());
                 }
             }
             catch (Exception ex)
             {
-                eventLog.WriteEntry("Couldn't search for updates: " + ex.InnerException.Message, EventLogEntryType.Error);
+                eventLog.WriteEntry("Couldn't search for updates: " + ex.Message, EventLogEntryType.Error);
                 if (Program.console)
                 {
                     Console.WriteLine(ex.ToString());
