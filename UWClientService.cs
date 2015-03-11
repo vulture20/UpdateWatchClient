@@ -18,13 +18,6 @@ namespace UpdateWatch_Client
 {
     public partial class UWClientService : ServiceBase
     {
-        //                         Std   Min  Sek  ms
-//        const double timerInterval = 2 * 60 * 60 * 1000;
-//        const double timerInterval =      1 * 60 * 1000;
-//        const Int32 timerRandom =             15 * 1000;
-//        const string serverIP = "192.168.116.200";
-//        const Int16 serverPort = 4584;
-
         private static System.Timers.Timer timer1 = new System.Timers.Timer();
         private static Random random = new Random();
         private static Thread th = new Thread(new ThreadStart(handleUpdates));
@@ -149,7 +142,6 @@ namespace UpdateWatch_Client
             try
             {
                 ISearchResult sResult = uSearcher.Search("IsInstalled=0 And IsHidden=0 And Type='Software'");
-//                ISearchResult sResult = uSearcher.Search("IsInstalled=1 And IsHidden=0");
 
                 eventLog.WriteEntry("Searched for Updates: " + sResult.Updates.Count + " found", EventLogEntryType.Information);
                 if (Program.console)
