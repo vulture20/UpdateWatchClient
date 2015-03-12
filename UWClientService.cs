@@ -51,7 +51,7 @@ namespace UpdateWatch_Client
                 }
                 catch (Exception ex)
                 {
-                    eventLog.WriteEntry("Errot at creating the config file: " + ex.InnerException.Message, EventLogEntryType.Error);
+                    eventLog.WriteEntry("Error at creating the config file: " + ex.InnerException.Message, EventLogEntryType.Error);
                     if (Program.console)
                     {
                         Console.WriteLine("Create Config: " + ex.Message);
