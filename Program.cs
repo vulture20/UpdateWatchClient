@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ServiceProcess;
 using System.Configuration.Install;
-
-using System.Xml.Serialization;
-using System.IO;
 
 namespace UpdateWatch_Client
 {
